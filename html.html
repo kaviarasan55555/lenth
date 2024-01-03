@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Length Converter</title>
+  <!-- Add Bootstrap CSS link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="text-center">Length Converter</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form id="lengthConverterForm">
+        <div class="mb-3">
+          <label for="lengthInput" class="form-label">Enter Length:</label>
+          <input type="number" class="form-control" id="lengthInput" required>
+        </div>
+        <div class="mb-3">
+          <label for="fromUnit" class="form-label">From Unit:</label>
+          <select class="form-select" id="fromUnit" required>
+            <option value="m">Meter (m)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="in">Inch (in)</option>
+            <option value="cm">Centimeter (cm)</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="toUnit" class="form-label">To Unit:</label>
+          <select class="form-select" id="toUnit" required>
+            <option value="m">Meter (m)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="in">Inch (in)</option>
+            <option value="cm">Centimeter (cm)</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="convertLength()">Convert</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+      <div id="result" class="alert alert-success" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  function convertLength() {
+    const lengthInput = document.getElementById('lengthInput').value;
+    const fromUnit = document.getElementById('fromUnit').value;
+    const toUnit = document.getElementById('toUnit').value;
+
+    // Conversion logic
+    let convertedLength;
+
+    switch (fromUnit) {
+      case 'm':
+        convertedLength = toUnit === 'ft' ? lengthInput * 3.28084 : toUnit === 'in' ? lengthInput * 39.3701 : toUnit === 'cm' ? lengthInput * 100 : lengthInput;
+        break;
+      case 'ft':
+        convertedLength = toUnit === 'm' ? lengthInput * 0.3048 : toUnit === 'in' ? lengthInput * 12 : toUnit === 'cm' ? lengthInput * 30.48 : lengthInput;
+        break;
+      case 'in':
+        convertedLength = toUnit === 'm' ? lengthInput * 0.0254 : toUnit === 'ft' ? lengthInput * 0.0833333 : toUnit === 'cm' ? lengthInput * 2.54 : lengthInput;
+        break;
+      case 'cm':
+        convertedLength = toUnit === 'm' ? lengthInput * 0.01 : toUnit === 'ft' ? lengthInput * 0.0328084 : toUnit === 'in' ? lengthInput * 0.393701 : lengthInput;
+        break;
+      default:
+        convertedLength = lengthInput;
+    }
+
+    // Display result
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `Converted Length: ${convertedLength.toFixed(2)} ${toUnit}`;
+    resultElement.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
